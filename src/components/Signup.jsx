@@ -26,7 +26,7 @@ const SignUp = () => {
     setLoading(true)
 
     try {
-      const result = await signUpNewUser(email, password, confirmPassword)
+      const result = await signUpNewUser(email, password)
 
       if (result.success) {
         navigate('/dashboard')
@@ -102,11 +102,12 @@ const SignUp = () => {
           >
             {loading ? 'Creating account...' : 'Create a new account'}
           </button>
+          {error && <p className="text-red-500 text-center pt-4">{error}</p>}
         </form>
 
         <p className="text-center text-sm mt-4">
           Have an account?{' '}
-          <Link to="/login" className="text-blue-500 hover:underline">Sign In</Link>
+          <Link to="/#" className="text-blue-500 hover:underline">Sign In</Link>
         </p>
 
         <div className="my-4 text-center text-gray-500">or</div>

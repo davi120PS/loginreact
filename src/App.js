@@ -4,7 +4,10 @@ import { createClient } from '@supabase/supabase-js'
 //import { createClient } from 'npm:@supabase/supabase-js@2'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthContextProvider } from './context/AuthContext'
+import PrivateRoute from './components/PrivateRoute'
 
+
+import Dashboard from './components/dashboard'
 import SignIn from './components/Signin'   // Este es tu SignIn
 import SignUp from './components/Signup'
 
@@ -30,29 +33,29 @@ export default function App() {
   return (
     <AuthContextProvider>
       <Router>
-      <Routes>
-        {/* Vista principal = login */}
-        <Route
-          path="/"
-          element={
-            session
-              ? <Navigate to="/dashboard" />
-              : <SignIn supabase={supabase} />
-          }
-        />
-        
-        <Route path="/signup" element={<SignUp />} />
-        
-        <Route
-          path="/dashboard"
-          element={
-            session
-              ? <div className="p-4">✅ Logged in as {session.user.email}</div>
-              : <Navigate to="/" />
-          }
-        />
-      </Routes>
-    </Router>
+        <Routes>
+          {/* Vista principal = login */}
+          <Route
+            path="/"
+            element={
+              session
+                ? <Navigate to="/dashboard" />
+                : <SignIn supabase={supabase} />
+            }
+          />
+
+          <Route path="/signup" element={<SignUp />} />
+
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </AuthContextProvider>
   )
 }

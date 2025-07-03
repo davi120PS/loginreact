@@ -8,7 +8,7 @@ import { router } from "./src/router";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <>
-        <h1 className="text-center pt-4">Inicio hhaha</h1>
+        <h1 className="text-center pt-4">Inicio login</h1>
     </>
     <RouterProvider router={router} />
   </StrictMode>

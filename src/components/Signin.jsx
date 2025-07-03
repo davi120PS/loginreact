@@ -66,10 +66,6 @@ const SignIn = () => {
           </button>
         </form>
 
-        <div className="text-right mt-2">
-          <a href="#" className="text-sm text-blue-500 hover:underline">Forgot password?</a>
-        </div>
-
         <div className="mt-6">
           <button 
             onClick={() => navigate('/signup')}  // <-- Aquí la navegación
