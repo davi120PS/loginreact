@@ -1,9 +1,14 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import Login from './components/Login'
+//import { createClient } from 'npm:@supabase/supabase-js@2'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthContextProvider } from './context/AuthContext'
 
-const supabase = createClient('https://<project>.supabase.co', '<your-anon-key>')
+import SignIn from './components/Signin'   // Este es tu SignIn
+import SignUp from './components/Signup'
+
+const supabase = createClient('https://iuvblndcwnqmxkciszlq.supabase.co', 'eyJhbGciOiJSeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1dmJsbmRjd25xbXhrY2lzemxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE1MTM0NjAsImV4cCI6MjA2NzA4OTQ2MH0.iUjoscgE7tIcsCqyc8fWqooTeBI7lkbgSNgiNWwGubM')
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -22,5 +27,32 @@ export default function App() {
     return () => subscription.unsubscribe()
   }, [])
 
-  return session ? <div className="p-4">✅ Logged in as {session.user.email}</div> : <Login supabase={supabase} />
+  return (
+    <AuthContextProvider>
+      <Router>
+      <Routes>
+        {/* Vista principal = login */}
+        <Route
+          path="/"
+          element={
+            session
+              ? <Navigate to="/dashboard" />
+              : <SignIn supabase={supabase} />
+          }
+        />
+        
+        <Route path="/signup" element={<SignUp />} />
+        
+        <Route
+          path="/dashboard"
+          element={
+            session
+              ? <div className="p-4">✅ Logged in as {session.user.email}</div>
+              : <Navigate to="/" />
+          }
+        />
+      </Routes>
+    </Router>
+    </AuthContextProvider>
+  )
 }

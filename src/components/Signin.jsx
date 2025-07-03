@@ -1,10 +1,12 @@
-// src/components/Login.jsx
 import React, { useState } from 'react'
 import { supabase } from '../supabaseClient'
+import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+
+const SignIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -56,7 +58,12 @@ const Login = () => {
             <label className="text-sm">Remember me</label>
           </div>
           
-          <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">Sign In</button>
+          <button 
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+          >
+            Sign In
+          </button>
         </form>
 
         <div className="text-right mt-2">
@@ -64,7 +71,12 @@ const Login = () => {
         </div>
 
         <div className="mt-6">
-          <button className="w-full border py-2 rounded text-sm font-medium">Create an account</button>
+          <button 
+            onClick={() => navigate('/signup')}  // <-- Aquí la navegación
+            className="w-full border py-2 rounded text-sm font-medium"
+          >
+            Create an account
+          </button>
         </div>
 
         <div className="my-4 text-center text-gray-500">or</div>
@@ -74,13 +86,8 @@ const Login = () => {
             onClick={loginWithGoogle}
             className="w-full flex items-center justify-center border py-2 rounded hover:bg-gray-100"
           >
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" className="w-5 h-5 mr-2" alt="Google" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" className="w-5 h-5 mr-2" alt="Google" />
             Login with Google
-          </button>
-
-          <button className="w-full flex items-center justify-center border py-2 rounded hover:bg-gray-100">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" className="w-5 h-5 mr-2" alt="Microsoft" />
-            Login with Microsoft
           </button>
         </div>
       </div>
@@ -88,4 +95,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignIn
